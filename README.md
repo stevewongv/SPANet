@@ -58,8 +58,11 @@ $ python main.py -a test -m latest
 ```
 
 ## Performance Change
+
 PSNR 38.02 -> 38.53
+
 SSIM 0.9868 -> 0.9875
+
 **All PSNR and SSIM of results are computed by using `skimage.measure`**
 
 ## License

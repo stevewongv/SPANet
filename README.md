@@ -24,7 +24,8 @@ If you use this code, please cite:
 See [Project Page](https://stevewongv.github.io/derain-project.html)
 
 ## Requirements
-* PyTorch >= 0.4.0
+* PyTorch == 0.4.1 (1.0.x may not work for training)
+* cupy
 * opencv-python
 * TensorBoardX
 * Python3.6
@@ -57,11 +58,8 @@ $ python main.py -a test -m latest
 ```
 
 ## Performance Change
-
-PSNR 98.02 -> 98.25
-
-SSIM 0.9868 -> 0.9873
-
+PSNR 38.02 -> 38.53
+SSIM 0.9868 -> 0.9875
 **All PSNR and SSIM of results are computed by using `skimage.measure`**
 
 ## License

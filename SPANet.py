@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 from collections import OrderedDict
 # import common
-
+from irnn import irnn
 ###### Layer 
 def conv1x1(in_channels, out_channels, stride = 1):
     return nn.Conv2d(in_channels,out_channels,kernel_size = 1,
@@ -29,28 +29,21 @@ class Bottleneck(nn.Module):
         out = self.group1(x) 
         return out
 
-class irnn_layer(nn.Module):
-    def __init__(self,in_channels):
-        super(irnn_layer,self).__init__()
-        self.left_weight = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
+class Spacial_IRNN(nn.Module):
+    def __init__(self,in_channels,alpha=0.2):
+        super(Spacial_IRNN,self).__init__()
+        self.left_weight  = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
         self.right_weight = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
-        self.up_weight = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
-        self.down_weight = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
-        
-    def forward(self,x):
-        _,_,H,W = x.shape
-        top_left = x.clone()
-        top_right = x.clone()
-        top_up = x.clone()
-        top_down = x.clone()
-        for i in range(H-1):
-            top_down[:,:,i+1,:] = F.relu(self.down_weight(top_down[:,:,i:i+1,:].clone())[:,:,0,:]   +x[:,:,i+1,:],inplace=False)
-            top_up[:,:,-(i+2),:] = F.relu(self.up_weight(top_up[:,:,-(i+1):H-i,:].clone())[:,:,0,:]   +x[:,:,-(i+2),:],inplace=False)
-        for i in range(W-1):
-            top_right[:,:,:,i+1] = F.relu(self.right_weight(top_right[:,:,:,i:i+1].clone())[:,:,:,0]  +top_right[:,:,:,i+1],inplace=False)
-            top_left[:,:,:,-(i+2)]= F.relu(self.left_weight(top_left[:,:,:,-(i+1):W-i].clone())[:,:,:,0]   +top_left[:,:,:,-(i+2)],inplace=False)
+        self.up_weight    = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
+        self.down_weight  = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
+        self.left_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
+        self.right_weight.weight = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
+        self.up_weight.weight    = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
+        self.down_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
+      
+    def forward(self,input):
+        return irnn()(input,self.up_weight.weight,self.right_weight.weight,self.down_weight.weight,self.left_weight.weight, self.up_weight.bias,self.right_weight.bias,self.down_weight.bias,self.left_weight.bias)
 
-        return (top_up,top_right,top_down,top_left)
 
 
 class Attention(nn.Module):
@@ -78,12 +71,11 @@ class SAM(nn.Module):
     def __init__(self,in_channels,out_channels,attention=1):
         super(SAM,self).__init__()
         self.out_channels = out_channels
-        self.irnn1 = irnn_layer(self.out_channels)
-        self.irnn2 = irnn_layer(self.out_channels)
-        self.conv_in = conv3x3(in_channels,self.out_channels)
-        
-        self.conv2 = conv3x3(in_channels*4,self.out_channels)
-        self.conv3 = conv3x3(in_channels*4,self.out_channels)
+        self.irnn1 = Spacial_IRNN(self.out_channels)
+        self.irnn2 = Spacial_IRNN(self.out_channels)
+        self.conv_in = conv3x3(in_channels,in_channels)
+        self.conv2 = conv3x3(in_channels*4,in_channels)
+        self.conv3 = conv3x3(in_channels*4,in_channels)
         self.relu2 = nn.ReLU(True)
         self.attention = attention
         if self.attention:

@@ -10,7 +10,6 @@ IRNNForward = open('./IRNN_Forward_cuda.cu','r').read()
 
 IRNNBackward = open('./IRNN_Backward_cuda.cu','r').read()
 
-IRNNWeightBaisBackward = open('./IRNN_Weight_Bias_Backward_cuda.cu','r').read()
 
 
 @cupy.util.memoize(for_each_device=True)

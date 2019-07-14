@@ -155,7 +155,7 @@ class irnn(torch.autograd.Function):
 					n],
 				stream=Stream
 			)
-			# print(grad_weight_left_map,"<-- grad weight map")
+			
 
 			grad_bias_up = torch.zeros_like(weight_left).reshape(weight_left.size(0))
 			grad_bias_right = torch.zeros_like(weight_left).reshape(weight_left.size(0))
@@ -174,39 +174,7 @@ class irnn(torch.autograd.Function):
 
 			
 
-			# n = input_feature.size(1)
-			# cuda_num_threads = n		
-			# cunnex('IRNNWeightBaisBackward')(
-			# 	grid=tuple([ int((n +  cuda_num_threads - 1) / cuda_num_threads), 1, 1 ]),
-			# 	block=tuple([ cuda_num_threads , 1, 1 ]),
-			# 	args=[ 
-			# 		grad_weight_up_map.data_ptr(),
-			# 		grad_weight_right_map.data_ptr(),
-			# 		grad_weight_down_map.data_ptr(),
-			# 		grad_weight_left_map.data_ptr(),
-
-			# 		grad_bias_up_map.data_ptr(),
-			# 		grad_bias_right_map.data_ptr(),
-			# 		grad_bias_down_map.data_ptr(),
-			# 		grad_bias_left_map.data_ptr(),
-
-			# 		grad_weight_up.data_ptr(),
-			# 		grad_weight_right.data_ptr(),
-			# 		grad_weight_down.data_ptr(),
-			# 		grad_weight_left.data_ptr(),   
-
-			# 		grad_bias_up.data_ptr(),
-			# 		grad_bias_right.data_ptr(),
-			# 		grad_bias_down.data_ptr(),
-			# 		grad_bias_left.data_ptr(),
-
-			# 		input_feature.size(0),
-			# 		input_feature.size(1),
-			# 		input_feature.size(2),
-			# 		input_feature.size(3),
-			# 		n],
-			# 	stream=Stream
-			# )
+		
 			
 		elif input_feature.is_cuda == False:
 			raise NotImplementedError()

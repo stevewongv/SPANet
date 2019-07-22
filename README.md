@@ -25,7 +25,7 @@ See [Project Page](https://stevewongv.github.io/derain-project.html)
 
 ## Requirements
 * PyTorch == 0.4.1 (1.0.x may not work for training)
-* cupy
+* cupy ([Installation Guide](https://docs-cupy.chainer.org/en/stable/install.html#install-cupy))
 * opencv-python
 * TensorBoardX
 * Python3.6

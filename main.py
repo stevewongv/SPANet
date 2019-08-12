@@ -112,7 +112,8 @@ class Session:
     def load_checkpoints(self, name,mode='train'):
         ckp_path = os.path.join(self.model_dir, name)
         try:
-            self.net.load_state_dict({k.replace('module.',''):v for k,v in torch.load(ckp_path)['net'].items()})
+            obj = torch.load(ckp_path)
+            self.net.load_state_dict({k.replace('module.',''):v for k,v in obj['net'].items()})
         except FileNotFoundError:
             return
 

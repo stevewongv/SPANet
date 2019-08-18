@@ -64,12 +64,12 @@ class Session:
         self.step = 0
         self.save_steps = 400
         self.num_workers = 16
-        self.batch_size = 32
+        self.batch_size = 16
         self.writers = {}
         self.dataloaders = {}
         self.shuffle = True
         self.opt = Adam(self.net.parameters(), lr=5e-3)
-        self.sche = MultiStepLR(self.opt, milestones=[5000, 15000,30000,50000], gamma=0.1)
+        self.sche = MultiStepLR(self.opt, milestones=[30000], gamma=0.1)
 
     def tensorboard(self, name):
         self.writers[name] = SummaryWriter(os.path.join(self.log_dir, name + '.events'))
@@ -217,7 +217,7 @@ def run_train_val(ckp_name='latest'):
     dt_train = sess.get_dataloader(sess.train_data_path)
     dt_val = sess.get_dataloader(sess.train_data_path)
 
-    while sess.step < 800000:
+    while sess.step < 40001:
         sess.sche.step()
         sess.net.train()
         sess.net.zero_grad()

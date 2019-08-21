@@ -70,7 +70,7 @@ Please see `License.txt` file.
 
 ## Acknowledgement 
 
-Code borrows from [RESCAN](https://github.com/XiaLiPKU/RESCAN) by Xia Li. Thanks for sharing!
+Code borrows from [RESCAN](https://github.com/XiaLiPKU/RESCAN) by [Xia Li](https://github.com/XiaLiPKU). The CUDA extension references [pyinn](https://github.com/szagoruyko/pyinn) by [Sergey Zagoruyko](https://github.com/szagoruyko) and [DSC(CF-Caffe)](https://github.com/xw-hu/CF-Caffe) by [Xiaowei Hu](https://github.com/xw-hu). Thanks for sharing!
 
 ## Contact
 E-Mail: steve.w.git@icloud.com

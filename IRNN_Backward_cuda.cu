@@ -7,29 +7,29 @@
 
 
 extern "C" __global__ void IRNNBackward(
-    float* 		        grad_input,
+    float* 				grad_input,
     
-    float*              grad_weight_up_map,
+    float*      		grad_weight_up_map,
     float*              grad_weight_right_map,
     float*              grad_weight_down_map,
     float*              grad_weight_left_map,
 
-    float*    grad_bias_up_map,
-    float*    grad_bias_right_map,
-    float*    grad_bias_down_map,
-    float*    grad_bias_left_map,
+    float*    			grad_bias_up_map,
+    float*   			grad_bias_right_map,
+    float*    			grad_bias_down_map,
+    float*    			grad_bias_left_map,
 
-    const float*  		weight_up,
+    const float*		weight_up,
     const float*        weight_right,
     const float*        weight_down,
     const float*        weight_left,
 
-	const float*  		grad_output_up, 
+    const float*		grad_output_up, 
     const float*        grad_output_right,
     const float*        grad_output_down,
     const float*        grad_output_left,
 
-	const float*  		output_up,
+    const float*  		output_up,
     const float*        output_right,
     const float*        output_down,
     const float*        output_left,

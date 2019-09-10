@@ -36,10 +36,10 @@ class Spacial_IRNN(nn.Module):
         self.right_weight = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
         self.up_weight    = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
         self.down_weight  = nn.Conv2d(in_channels,in_channels,kernel_size=1,stride=1,groups=in_channels,padding=0)
-        self.left_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
-        self.right_weight.weight = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
-        self.up_weight.weight    = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
-        self.down_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*32))
+        self.left_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*in_channels))
+        self.right_weight.weight = nn.Parameter(torch.tensor([[[[alpha]]]]*in_channels))
+        self.up_weight.weight    = nn.Parameter(torch.tensor([[[[alpha]]]]*in_channels))
+        self.down_weight.weight  = nn.Parameter(torch.tensor([[[[alpha]]]]*in_channels))
       
     def forward(self,input):
         return irnn()(input,self.up_weight.weight,self.right_weight.weight,self.down_weight.weight,self.left_weight.weight, self.up_weight.bias,self.right_weight.bias,self.down_weight.bias,self.left_weight.bias)

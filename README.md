@@ -63,7 +63,11 @@ PSNR 38.02 -> 38.53
 
 SSIM 0.9868 -> 0.9875
 
-**All PSNR and SSIM of results are computed by using `skimage.measure`**
+**For generalization, we here stop at 40K steps.**
+
+**All PSNR and SSIM of results are computed by using `skimage.measure`. Please use this to evaluate your works.**
+
+
 
 ## License
 Please see `License.txt` file.

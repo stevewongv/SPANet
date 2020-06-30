@@ -23,6 +23,8 @@ If you use this code or our dataset(including test set), please cite:
 ## Dataset
 See [Project Page](https://stevewongv.github.io/derain-project.html)
 
+**UPDATE** We release the [code](https://github.com/stevewongv/SPANet/blob/master/clean%20image%20generation.ipynb) of clean image generation. We also provide some [synthesize and real video examples](https://drive.google.com/file/d/1AgwSDy0W91uWGH9r6H4yMySFyJJh0vpM/view?usp=sharing) for researchers to try. Note that we only implemented the code using 8 threads.
+
 ## Requirements
 * PyTorch == 0.4.1 (1.0.x may not work for training)
 * cupy ([Installation Guide](https://docs-cupy.chainer.org/en/stable/install.html#install-cupy))
